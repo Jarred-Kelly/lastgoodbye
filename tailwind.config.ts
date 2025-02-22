@@ -5,19 +5,27 @@ const config = {
   content: [
     './pages/**/*.{ts,tsx}',
     './components/**/*.{ts,tsx}',
+    './sections/**/*.{ts,tsx}',
     './app/**/*.{ts,tsx}',
     './src/**/*.{ts,tsx}',
+    './app/*{ts,tsx}',
   ],
   prefix: '',
   theme: {
-    container: {
-      center: true,
-      padding: '2rem',
-      screens: {
-        '2xl': '1400px',
-      },
+    screens: {
+      sm: "375px",
+      md: "768px",
+      lg: "1200px",
+      '2xl': '1400px',
     },
     extend: {
+      container: {
+        center: true,
+        padding: {
+          DEFAULT: "20px",
+          lg: "80px",
+        },
+      },
       colors: {
         dark: {
           1: '#1C1F2E',
