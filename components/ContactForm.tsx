@@ -52,7 +52,8 @@ const ContactForm: React.FC<ContactFormProps> = ({ isOpen, onClose }) => {
       });
 
       if (!response.ok) {
-        throw new Error('Failed to send email');
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to send email');
       }
       
       // Show success message
@@ -70,6 +71,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ isOpen, onClose }) => {
         onClose();
       }, 3000);
     } catch (error) {
+      console.error('Form submission error:', error);
       setSubmitError('Failed to send message. Please try again.');
     } finally {
       setIsSubmitting(false);
@@ -77,9 +79,8 @@ const ContactForm: React.FC<ContactFormProps> = ({ isOpen, onClose }) => {
   };
   
   return (
-    <div className="fixed inset-0 flex items-center justify-center z-50" onClick={(e) => e.target === e.currentTarget && onClose()}>
-      <div className="fixed inset-0 bg-black opacity-50"></div>
-      <div className="relative bg-white rounded-lg p-6 sm:p-8 w-full max-w-md mx-4 sm:mx-auto shadow-xl">
+    <div className="fixed inset-0 flex items-center justify-center z-50" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
+      <div className="bg-white rounded-lg p-6 sm:p-8 w-full max-w-md mx-auto shadow-xl relative">
         <button 
           className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 text-2xl"
           onClick={onClose}
