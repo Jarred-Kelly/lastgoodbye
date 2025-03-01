@@ -28,6 +28,7 @@ const Header = () => {
                       <button 
                         onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                         className='flex items-center justify-center'
+                        aria-label="Toggle menu"
                       >
                         <Menu className='h-5 w-5' />
                       </button>
@@ -42,7 +43,10 @@ const Header = () => {
                         >
                           Contact Us
                         </a>
-                        <button className='bg-black text-white px-4 py-2 rounded-lg font-medium inline-flex items-center justify-center tracking-tight'>
+                        <button 
+                          className='bg-black text-white px-4 py-2 rounded-lg font-medium inline-flex items-center justify-center tracking-tight'
+                          onClick={handleOpenContactForm}
+                        >
                           Get a Quote!
                         </button>
                     </nav>
@@ -60,7 +64,10 @@ const Header = () => {
                       >
                         Contact Us
                       </a>
-                      <button className='mx-4 bg-black text-white px-4 py-2 rounded-lg font-medium inline-flex items-center justify-center tracking-tight'>
+                      <button 
+                        className='mx-4 bg-black text-white px-4 py-2 rounded-lg font-medium inline-flex items-center justify-center tracking-tight'
+                        onClick={handleOpenContactForm}
+                      >
                         Get a Quote!
                       </button>
                     </nav>

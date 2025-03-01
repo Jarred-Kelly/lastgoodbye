@@ -1,5 +1,4 @@
 import React, { useState, FormEvent } from 'react';
-// import { PhoneIcon, MailIcon } from '@heroicons/react/outline';
 
 interface ContactFormProps {
   isOpen: boolean;
@@ -27,7 +26,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ isOpen, onClose }) => {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     
-    // Basic validation
+    // Validation
     if (!formData.firstName.trim() || !formData.email.trim()) {
       setSubmitError('Name and email are required fields');
       return;
@@ -37,17 +36,24 @@ const ContactForm: React.FC<ContactFormProps> = ({ isOpen, onClose }) => {
     setSubmitError('');
 
     try {
-      // Create a subject line with the name
-      const subject = `Funeral Livestream Request from ${formData.firstName} ${formData.surname}`;
-      
-      // Mock email sending (replace with actual email sending logic)
-      // For demonstration, we're just simulating a successful submission
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      console.log('Form submitted:', {
-        ...formData,
-        subject
+      // Send to server API
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          firstName: formData.firstName,
+          surname: formData.surname,
+          email: formData.email,
+          message: formData.message,
+          subject: `Funeral Livestream Request from ${formData.firstName} ${formData.surname}`,
+        }),
       });
+
+      if (!response.ok) {
+        throw new Error('Failed to send email');
+      }
       
       // Show success message
       setSubmitSuccess(true);
@@ -73,10 +79,11 @@ const ContactForm: React.FC<ContactFormProps> = ({ isOpen, onClose }) => {
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50" onClick={(e) => e.target === e.currentTarget && onClose()}>
       <div className="fixed inset-0 bg-black opacity-50"></div>
-      <div className="relative bg-white rounded-lg p-8 max-w-md w-full mx-4 shadow-xl">
+      <div className="relative bg-white rounded-lg p-6 sm:p-8 w-full max-w-md mx-4 sm:mx-auto shadow-xl">
         <button 
           className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 text-2xl"
           onClick={onClose}
+          aria-label="Close"
         >
           &times;
         </button>
@@ -84,13 +91,17 @@ const ContactForm: React.FC<ContactFormProps> = ({ isOpen, onClose }) => {
         <h2 className="text-2xl font-bold mb-2 tracking-tight text-center">Contact Us</h2>
         <p className="text-gray-600 text-center mb-6">Request a funeral livestreaming service</p>
         
-        <div className="flex justify-center space-x-6 mb-6">
+        <div className="flex flex-col sm:flex-row justify-center sm:space-x-6 mb-6 space-y-2 sm:space-y-0">
           <a href="tel:+12345678901" className="flex items-center text-gray-700 hover:text-black">
-            {/* <PhoneIcon className="h-5 w-5 mr-2" /> */}
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+            </svg>
             <span>(234) 567-8901</span>
           </a>
           <a href="mailto:contact@lastgoodbye.com" className="flex items-center text-gray-700 hover:text-black">
-            {/* <MailIcon className="h-5 w-5 mr-2" /> */}
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+            </svg>
             <span>contact@lastgoodbye.com</span>
           </a>
         </div>
@@ -102,7 +113,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ isOpen, onClose }) => {
           </div>
         ) : (
           <form className="space-y-4" onSubmit={handleSubmit}>
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 mb-1">
                   First Name <span className="text-red-500">*</span>
