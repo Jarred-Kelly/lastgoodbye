@@ -11,7 +11,7 @@ import avatar7 from "@/public/images/avatar-7.png";
 import avatar8 from "@/public/images/avatar-8.png";
 import avatar9 from "@/public/images/avatar-9.png";
 import Image from 'next/image';
-import { twMerge } from 'tailwind-merge';
+import { motion } from 'framer-motion';
 
 const testimonials = [
   {
@@ -74,24 +74,48 @@ const firstCol = testimonials.slice(0, 3);
 const secondCol = testimonials.slice(3, 6);
 const thirdCol = testimonials.slice(6, 9);
 
-const TestimonialsColumn = (props: {className?: string; testimonials: typeof testimonials}) => (
-    <div className={twMerge('flex flex-col gap-6 mt-10 [mask-image:linear-gradient(to_bottom,transparent,black_25%,black_75%,transparent)]',
-         props.className
-    )}>
-        {props.testimonials.map(({ text, imageSrc, name }) => (
+const TestimonialsColumn = (props: {
+  className?: string; 
+  testimonials: typeof testimonials;
+  duration?: number;
+  }) => (
+  <div className={props.className}>
+    <motion.div 
+    animate={{
+      translateY: "-50%",
+    }} 
+    transition={{
+      duration: props.duration || 10,
+      repeat: Infinity,
+      repeatType: 'loop',
+      ease: 'linear',
+    }}
+    className='flex flex-col gap-6 pb-6'>
+      {[... new Array(2)].fill(0).map((_, index) => (
+        <React.Fragment key={index}>
+          {props.testimonials.map(({ text, imageSrc, name }) => (
             <div className='card' key={name}>
                 <div>
                     <div>{text}</div>
                     <div className='flex items-center gap-3 mt-5'>
                         <div className=''>
-                            <Image src={imageSrc} alt={name} height={40} width={40} className="rounded-full" />
+                            <Image 
+                              src={imageSrc} 
+                              alt={name} 
+                              height={40} 
+                              width={40} 
+                              className="rounded-full" 
+                            />
                         </div>
                         <div className='font-medium tracking-tight leading-5'>{name}</div>
                     </div>
                 </div>
             </div>
-        ))}
-    </div>
+          ))}
+        </React.Fragment>
+      ))} 
+    </motion.div>
+  </div>
 );
 
 const Testimonials = () => {
@@ -103,12 +127,12 @@ const Testimonials = () => {
                     <div className='tag'>Testimonials</div>
                 </div>
                 <h2 className='section-title mt-5'>What out users say</h2>
-                <p className='section-description mt-5'>Look ath lives we touched</p>
+                <p className='section-description mt-5'>Look at the lives we touched</p>
             </div>
-            <div className='flex justify-center gap-6'>
-                <TestimonialsColumn testimonials={firstCol}/>    
-                <TestimonialsColumn testimonials={secondCol} className='hidden md:flex'/>    
-                <TestimonialsColumn testimonials={thirdCol} className='hidden lg:flex'/>    
+            <div className='flex justify-center gap-6 mt-10 [mask-image:linear-gradient(to_bottom,transparent,black_25%,black_75%,transparent)] max-h-[738px] overflow-hidden'>
+                <TestimonialsColumn testimonials={firstCol} duration={15}/>    
+                <TestimonialsColumn testimonials={secondCol} className='hidden md:block' duration={19}/>    
+                <TestimonialsColumn testimonials={thirdCol} className='hidden lg:block' duration={17}/>    
             </div>
         </div>
     </section>
