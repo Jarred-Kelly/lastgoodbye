@@ -16,55 +16,55 @@ import { motion } from 'framer-motion';
 const testimonials = [
   {
     text: "As a seasoned designer always on the lookout for innovative tools, Framer.com instantly grabbed my attention.",
-    imageSrc: avatar1.src,
+    image: avatar1,
     name: "Jamie Rivera",
     username: "@jamietechguru00",
   },
   {
     text: "Our team's productivity has skyrocketed since we started using this tool. ",
-    imageSrc: avatar2.src,
+    image: avatar2,
     name: "Josh Smith",
     username: "@jjsmith",
   },
   {
     text: "This app has completely transformed how I manage my projects and deadlines.",
-    imageSrc: avatar3.src,
+    image: avatar3,
     name: "Morgan Lee",
     username: "@morganleewhiz",
   },
   {
     text: "I was amazed at how quickly we were able to integrate this app into our workflow.",
-    imageSrc: avatar4.src,
+    image: avatar4,
     name: "Casey Jordan",
     username: "@caseyj",
   },
   {
     text: "Planning and executing events has never been easier. This app helps me keep track of all the moving parts, ensuring nothing slips through the cracks.",
-    imageSrc: avatar5.src,
+    image: avatar5,
     name: "Taylor Kim",
     username: "@taylorkimm",
   },
   {
     text: "The customizability and integration capabilities of this app are top-notch.",
-    imageSrc: avatar6.src,
+    image: avatar6,
     name: "Riley Smith",
     username: "@rileysmith1",
   },
   {
     text: "Adopting this app for our team has streamlined our project management and improved communication across the board.",
-    imageSrc: avatar7.src,
+    image: avatar7,
     name: "Jordan Patels",
     username: "@jpatelsdesign",
   },
   {
     text: "With this app, we can easily assign tasks, track progress, and manage documents all in one place.",
-    imageSrc: avatar8.src,
+    image: avatar8,
     name: "Sam Dawson",
     username: "@dawsontechtips",
   },
   {
     text: "Its user-friendly interface and robust features support our diverse needs.",
-    imageSrc: avatar9.src,
+    image: avatar9,
     name: "Casey Harper",
     username: "@casey09",
   },
@@ -93,14 +93,14 @@ const TestimonialsColumn = (props: {
     className='flex flex-col gap-6 pb-6'>
       {[... new Array(2)].fill(0).map((_, index) => (
         <React.Fragment key={index}>
-          {props.testimonials.map(({ text, imageSrc, name }) => (
-            <div className='card' key={name}>
+          {props.testimonials.map(({ text, image, name }) => (
+            <div className='card' key={`${name}-${index}`}>
                 <div>
                     <div>{text}</div>
                     <div className='flex items-center gap-3 mt-5'>
                         <div className=''>
                             <Image 
-                              src={imageSrc} 
+                              src={image} 
                               alt={name} 
                               height={40} 
                               width={40} 
@@ -126,7 +126,7 @@ const Testimonials = () => {
                 <div className='flex justify-center'>
                     <div className='tag'>Testimonials</div>
                 </div>
-                <h2 className='section-title mt-5'>What out users say</h2>
+                <h2 className='section-title mt-5'>What our users say</h2>
                 <p className='section-description mt-5'>Look at the lives we touched</p>
             </div>
             <div className='flex justify-center gap-6 mt-10 [mask-image:linear-gradient(to_bottom,transparent,black_25%,black_75%,transparent)] max-h-[738px] overflow-hidden'>

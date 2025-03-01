@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useRef } from 'react';
+import Image from 'next/image';
 import cogImage from '@/public/images/cog.png';
 import Dove from '@/public/images/spring.png';
 import noodleImage from '@/public/images/noodle.png';
@@ -27,10 +28,7 @@ const Hero = () => {
                         </div>
                     </div>
                     <div className='mt-20 md:mt-0 md:h-[648px] md:flex-1 relative'>
-                        <motion.img 
-                            src={cogImage.src} 
-                            alt='Cog Image' 
-                            className='md:absolute md:h-full md:w-auto md:max-w-none md:-left-6 lg:left-0' 
+                        <motion.div
                             animate={{
                                 translateY: [-25, 25],
                             }}
@@ -40,30 +38,50 @@ const Hero = () => {
                                 duration: 2.5,
                                 ease: 'easeInOut',
                             }}
-                        /> 
-                        <motion.img  
-                            src={Dove.src} 
-                            alt='Cylinder Image' 
-                            className='hidden md:block -top-8 -left-32 md:absolute'
+                            className='md:absolute md:h-full md:w-auto md:-left-6 lg:left-0'
+                        >
+                            <Image 
+                                src={cogImage}
+                                alt='Cog Image'
+                                width={500}
+                                height={648}
+                                className='md:h-full md:w-auto md:max-w-none'
+                            />
+                        </motion.div>
+                        
+                        <motion.div
                             style={{
                                 translateY: translateY,
                             }}
-                        /> 
-                        <motion.img 
-                            src={noodleImage.src} 
-                            alt='Noodle Image' 
-                            width={220} 
-                            className='hidden lg:block absolute top-[524px] left-[448px] rotate-[30deg]' 
+                            className='hidden md:block absolute -top-8 -left-32'
+                        >
+                            <Image 
+                                src={Dove}
+                                alt='Cylinder Image'
+                                width={300}
+                                height={300}
+                            />
+                        </motion.div>
+                        
+                        <motion.div
                             style={{
                                 rotate: 30,
                                 translateY: translateY,
                             }}
-                        /> 
+                            className='hidden lg:block absolute top-[524px] left-[448px]'
+                        >
+                            <Image 
+                                src={noodleImage}
+                                alt='Noodle Image'
+                                width={220}
+                                height={220}
+                            />
+                        </motion.div>
                     </div>
                 </div>
             </div>
         </section>
-  )
+    )
 }
 
 export default Hero;
